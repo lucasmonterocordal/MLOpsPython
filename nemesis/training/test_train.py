@@ -13,6 +13,7 @@ def test_train_model():
 
     # preds = reg_model.predict([[1], [2]])
     # np.testing.assert_almost_equal(preds, [101, 101])
+    return 0
 
 
 def test_get_model_metrics():
@@ -32,3 +33,4 @@ def test_get_model_metrics():
     # assert 'accuracy' in metrics
     # accuracy = metrics['accuracy']
     # np.testing.assert_almost_equal(accuracy, 101)
+    return 0

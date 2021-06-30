@@ -66,7 +66,7 @@ def main():
 
     # Load the training data as dataframe
     data_dir = "data"
-    #data_file = os.path.join(data_dir, 'diabetes.csv')
+    # data_file = os.path.join(data_dir, 'diabetes.csv')
     data_file = os.path.join(data_dir, 'ID0018C09_dataset.csv')
     train_df = pd.read_csv(data_file)
 

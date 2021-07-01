@@ -3,34 +3,31 @@ from nemesis.training.train import train_model, get_model_metrics
 
 
 def test_train_model():
-    # X_train = np.array([0.9881476548697458,1.0574118809171713,1.107516482772424,1.1680586851515704,1.1706494289622553,1.1173641094266091,1.1230256133841114,1.1214253211011833,1.1570478978922298,1.0958661153419724,0.8962792845174279,0.9837183386596208,1.0047096455536586,1.118186522268419,1.0535245412580314,0.9287346565314413,0.9301213623382195,0.9832277974387773,0.8848283088742313,0.9741439267336769,0.7272957025494287,0.8690971745069971,0.848041469004961,0.7408090254185772,0.7196108666182776,101.0
-    # ]).reshape(-1, 1)
-    # y_train = np.array([0.9891585091521463,0.9561482540655757,1.1548122768581368,1.1692390912718105,1.2695101051584812,1.1958630064631255,1.135863248099865,1.0303966235308724,1.0708485193242276,1.0400134094452125,0.9839702773269505,1.0985840006159213,1.0792634572242652,1.0777988953130073,1.001256091388746,0.8884159525867951,0.9555725760292787,0.8706521863050016,0.8796065247548931,0.9585159900889755,0.7562235876193503,0.8057159447420371,0.845102945842112,0.7772617659730716,0.7670074351227987,101.0
-    # ])
-    # data = {"train": {"X": X_train, "y": y_train}}
 
-    # reg_model = train_model(data)
+    X_train = np.array([1, 2, 3, 4, 5, 6]).reshape(-1, 1)
+    y_train = np.array([10, 9, 8, 8, 6, 5])
+    data = {"train": {"X": X_train, "y": y_train}}
 
-    # preds = reg_model.predict([[1], [2]])
-    # np.testing.assert_almost_equal(preds, [101, 101])
-    return None
+    reg_model = train_model(data)
+
+    preds = reg_model.predict([[1], [2]])
+    np.testing.assert_almost_equal(preds, [10, 9])
 
 
 def test_get_model_metrics():
+    class MockModel:
 
-    # class MockModel:
+        @staticmethod
+        def predict(data):
+            return ([8, 7])
 
-    #     @staticmethod
-    #     def predict(data):
-    #         return ([8.12121212, 7.21212121])
-    # 
-    # X_test = np.array([3, 4]).reshape(-1, 1)
-    # y_test = np.array([8, 7])
-    # data = {"test": {"X": X_test, "y": y_test}}
+    X_test = np.array([3, 4]).reshape(-1, 1)
+    y_test = np.array([8, 8])
+    data = {"test": {"X": X_test, "y": y_test}}
 
-    # metrics = get_model_metrics(MockModel(), data)
+    metrics = get_model_metrics(MockModel(), data)
 
-    # assert 'accuracy' in metrics
-    # accuracy = metrics['accuracy']
-    # np.testing.assert_almost_equal(accuracy, 101)
-    return None
+    assert 'accuracy' in metrics
+    accuracy_score = metrics['accuracy']
+    print(accuracy_score)
+    np.testing.assert_almost_equal(accuracy_score, 0.5)

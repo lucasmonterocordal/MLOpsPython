@@ -37,7 +37,7 @@ stages:
     - template: code-quality-template.yml
     - task: AzureCLI@1
       inputs:
-        azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
+        azureSubscription: '4a7ec09b-106b-464d-9c54-cfc59c51a959'
         scriptLocation: inlineScript
         workingDirectory: $(Build.SourcesDirectory)
         inlineScript: |

@@ -23,15 +23,11 @@ IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THE SOFTWARE CODE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
-
 import os
 import pandas as pd
-from sklearn.linear_model import Ridge
 from sklearn.svm import SVC
-from sklearn.metrics import mean_squared_error
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
-
 
 # Split the dataframe into test and train data
 def split_data(df):
@@ -44,7 +40,6 @@ def split_data(df):
             "test": {"X": X_test, "y": y_test}}
     return data
 
-
 # Train the model, return the model
 def train_model(data):
     reg_model = SVC(kernel='linear',
@@ -53,7 +48,6 @@ def train_model(data):
     reg_model.fit(data["train"]["X"], data["train"]["y"])
     return reg_model
 
-
 # Evaluate the metrics for the model
 def get_model_metrics(model, data):
     preds = model.predict(data["test"]["X"])
@@ -61,27 +55,20 @@ def get_model_metrics(model, data):
     metrics = {"accuracy": accuracy}
     return metrics
 
-
 def main():
     print("Running train.py")
-
-
     # Load the training data as dataframe
     data_dir = "data"
     # data_file = os.path.join(data_dir, 'diabetes.csv')
     data_file = os.path.join(data_dir, 'ID0018C09_dataset.csv')
     train_df = pd.read_csv(data_file)
-
     data = split_data(train_df)
-
     # Train the model
     model = train_model(data)
-
     # Log the metrics for the model
     metrics = get_model_metrics(model, data)
     for (k, v) in metrics.items():
         print(f"{k}: {v}")
-
 
 if __name__ == '__main__':
     main()

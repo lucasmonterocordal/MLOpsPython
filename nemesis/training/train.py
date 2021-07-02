@@ -31,6 +31,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
+
 # Split the dataframe into test and train data
 def split_data(df):
     X = df.drop('Y', axis=1).values

@@ -39,8 +39,8 @@ input = {"data": [[0.9881476548697458,
     1.1362953360901118,
     1.1737614469976543,
     1.0585470469401108,
-    1.0637206436139601
-    ,1.0873102142916191,
+    1.0637206436139601,
+    1.0873102142916191,
     1.01837173608471,
     0.9667168488572627,
     1.075516969333446,
@@ -80,7 +80,7 @@ def call_web_service(e, service_type, service_name):
     output = call_web_app(service.scoring_uri, headers)
 
     return output
-
+    
 
 def call_web_app(url, headers):
 

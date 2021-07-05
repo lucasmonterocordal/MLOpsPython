@@ -81,7 +81,7 @@ def call_web_service(e, service_type, service_name):
     output = call_web_app(service.scoring_uri, headers)
 
     return output
-    
+
 
 def call_web_app(url, headers):
 

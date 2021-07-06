@@ -26,6 +26,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 
 import os
+import numpy as np
 import pandas as pd
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
@@ -36,8 +37,33 @@ from sklearn.model_selection import train_test_split
 def split_data(df):
     X = df.drop('Y', axis=1).values
     y = df['Y'].values
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=0)
+    # Lists for proper splitting
+    X_train_lst = []
+    X_test_lst = []
+    y_train_lst = []
+    y_test_lst = []
+    for label in np.unique(y):
+        # Return the index with that label
+        index = np.where((y == label))
+        # We add the positions to x and y
+        x_l = X[index[0], :]
+        Y_l = y[index[0]]
+        # Split the values 70/30 in a random mode for the previous values
+        X_tr_onelab, X_te_onelab, y_tr_onelab, y_te_onelab = train_test_split(
+            x_l, Y_l,
+            train_size=0.7,
+            test_size=0.3,
+            shuffle=False)
+        # Complete list with all the labels 70/30
+        X_train_lst.append(X_tr_onelab)
+        X_test_lst.append(X_te_onelab)
+        y_train_lst.append(y_tr_onelab)
+        y_test_lst.append(y_te_onelab)
+    # Put in an array the lists for different classes
+    X_train = np.vstack(X_train_lst)
+    X_test = np.vstack(X_test_lst)
+    y_train = np.vstack(y_train_lst).flatten()
+    y_test = np.vstack(y_test_lst)
     data = {"train": {"X": X_train, "y": y_train},
             "test": {"X": X_test, "y": y_test}}
     return data

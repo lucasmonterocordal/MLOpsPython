@@ -65,7 +65,6 @@ def split_data(df):
     return data
 
 
-
 # Train the model, return the model
 def train_model(data):
     reg_model = SVC(kernel='linear',

@@ -37,3 +37,6 @@ dependencies:
 
       # MLOps with R
       - azure-storage-blob
+
+      # Numpy for operations
+      - numpy

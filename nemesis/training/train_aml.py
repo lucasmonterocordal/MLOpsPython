@@ -148,7 +148,7 @@ def main():
     data = split_data(df)
 
     # Train the model
-    model = train_model(data, train_args)
+    model = train_model(data)
 
     # Evaluate and log the metrics returned from the train function
     metrics = get_model_metrics(model, data)

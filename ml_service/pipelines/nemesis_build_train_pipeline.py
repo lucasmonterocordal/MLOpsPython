@@ -65,7 +65,7 @@ def main():
         create_sample_data_csv()
 
         # Use a CSV to read in the data set.
-        file_name = "diabetes.csv"
+        file_name = "ID0018C09_dataset.csv"
 
         if not os.path.exists(file_name):
             raise Exception(

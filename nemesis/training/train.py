@@ -45,11 +45,10 @@ def split_data(df):
     for label in np.unique(y):
         # Return the index with that label
         index = np.where((y == label))
-        # Index has two arrays, one wiht the positions and one filled with zeros
         # We add the positions to x and y
         x_l = X[index[0], :]
         Y_l = y[index[0]]
-        # Split the values 70/30 in a random mode for the values acquired in the previous step
+        # Split the values 70/30 in a random mode for the previous values
         X_tr_onelab, X_te_onelab, y_tr_onelab, y_te_onelab = train_test_split(
             x_l, Y_l,
             train_size=0.7,

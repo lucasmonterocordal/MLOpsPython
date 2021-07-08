@@ -32,42 +32,47 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
+from scipy.io import loadmat
+
 
 # Split the dataframe into test and train data
 def split_data(df):
     X = df.drop('Y', axis=1).values
-    y = df['Y'].values
+    aux_y = df['Y'].values
+    y = np.zeros([len(aux_y),1])
+    for pos, value in enumerate( aux_y):
+        y[pos]=np.array([value])
     # Lists for proper splitting
+    arrays_label = []
     X_train_lst = []
     X_test_lst = []
     y_train_lst = []
     y_test_lst = []
     for label in np.unique(y):
-        # Return the index with that label
-        index = np.where((y == label))
+        index = np.where((y == label)) #return the index with that label
+        # Index has two arrays, one wiht the positions and one filled with zeros
         # We add the positions to x and y
-        x_l = X[index[0], :]
+        x_l = X[index[0],:]
         Y_l = y[index[0]]
-        # Split the values 70/30 in a random mode for the previous values
-        X_tr_onelab, X_te_onelab, y_tr_onelab, y_te_onelab = train_test_split(
+        #Split the values 70/30 in a random mode for the previous values
+        a, b, c, d = train_test_split(
             x_l, Y_l,
             train_size=0.7,
             test_size=0.3,
             shuffle=False)
-        # Complete list with all the labels 70/30
-        X_train_lst.append(X_tr_onelab)
-        X_test_lst.append(X_te_onelab)
-        y_train_lst.append(y_tr_onelab)
-        y_test_lst.append(y_te_onelab)
+        #Complete list with all the labels 70/30
+        X_train_lst.append( a)
+        X_test_lst.append( b)
+        y_train_lst.append( c)
+        y_test_lst.append( d)
     # Put in an array the lists for different classes
-    X_train = np.vstack(X_train_lst)
-    X_test = np.vstack(X_test_lst)
-    y_train = np.vstack(y_train_lst).flatten()
-    y_test = np.vstack(y_test_lst)
+    X_train = np.vstack( X_train_lst)
+    X_test = np.vstack( X_test_lst)
+    y_train = np.vstack( y_train_lst).flatten()
+    y_test = np.vstack( y_test_lst)
     data = {"train": {"X": X_train, "y": y_train},
             "test": {"X": X_test, "y": y_test}}
     return data
-
 
 # Train the model, return the model
 def train_model(data):
@@ -90,9 +95,9 @@ def main():
     print("Running train.py")
     # Load the training data as dataframe
     data_dir = "data"
-    # data_file = os.path.join(data_dir, 'diabetes.csv')
     data_file = os.path.join(data_dir, 'ID0018C09_dataset.csv')
     train_df = pd.read_csv(data_file)
+
     data = split_data(train_df)
     # Train the model
     model = train_model(data)

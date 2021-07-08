@@ -46,7 +46,8 @@ def split_data(df):
     y_train_lst = []
     y_test_lst = []
     for label in np.unique(y):
-        index = np.where((y == label)) # return the index with that label
+        # Return the index with that label
+        index = np.where((y == label)) 
         # Index has two arrays, one wiht the positions and one with zeros
         # We add the positions to x and y
         x_l = X[index[0], :]

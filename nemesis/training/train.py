@@ -46,18 +46,18 @@ def split_data(df):
     y_train_lst = []
     y_test_lst = []
     for label in np.unique(y):
-        index = np.where((y == label)) #return the index with that label
-        # Index has two arrays, one wiht the positions and one filled with zeros
+        index = np.where((y == label)) # return the index with that label
+        # Index has two arrays, one wiht the positions and one with zeros
         # We add the positions to x and y
         x_l = X[index[0], :]
         Y_l = y[index[0]]
-        #Split the values 70/30 in a random mode for the previous values
+        # Split the values 70/30 in a random mode for the previous values
         a, b, c, d = train_test_split(
             x_l, Y_l,
             train_size=0.7,
             test_size=0.3,
             shuffle=False)
-        #Complete list with all the labels 70/30
+        # Complete list with all the labels 70/30
         X_train_lst.append(a)
         X_test_lst.append(b)
         y_train_lst.append(c)
@@ -70,6 +70,7 @@ def split_data(df):
     data = {"train": {"X": X_train, "y": y_train},
             "test": {"X": X_test, "y": y_test}}
     return data
+
 
 # Train the model, return the model
 def train_model(data):

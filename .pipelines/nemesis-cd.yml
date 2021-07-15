@@ -14,7 +14,8 @@ trigger: none
 resources:
   containers:
   - container: mlops
-    image: mcr.microsoft.com/mlops/python:latest
+    image: mlops/nem:latest
+    endpoint: acrconnection
   pipelines:
   - pipeline: model-train-ci
     source: Model-Train-Register-CI # Name of the triggering pipeline
@@ -22,6 +23,8 @@ resources:
       branches:
         include:
         - master
+        - nemesis-main
+        - removing
 
 variables:
 - template: nemesis-variables-template.yml

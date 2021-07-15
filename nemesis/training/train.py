@@ -96,6 +96,7 @@ def main():
     data_dir = "data"
     data_file = os.path.join(data_dir, 'ID0018C09_dataset.csv')
     train_df = pd.read_csv(data_file)
+    test_data = os.path.join(data_dir, 'ID0018C09_dataset.mat')
 
     data = split_data(train_df)
     # Train the model

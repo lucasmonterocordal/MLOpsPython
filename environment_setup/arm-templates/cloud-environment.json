@@ -46,6 +46,18 @@
       "type": "string",
       "defaultValue": "[concat(toLower(parameters('baseName')),'amlcr')]"
     },
+    "dataBase": {
+      "type": "string",
+      "defaultValue": "[concat(toLower(parameters('baseName')),'database')]"
+    },
+    "container": {
+      "type": "string",
+      "defaultValue": "[concat(toLower(parameters('baseName')),'-container')]"
+    },
+    "iotHub": {
+        "type": "string",
+        "defaultValue": "[concat(toLower(parameters('baseName')),'IoT')]"
+    }, 
     "sku": {
       "type": "string",
       "defaultValue": "basic",
@@ -65,7 +77,10 @@
     "keyVaultName": "[parameters('keyvault')]",
     "tenantId": "[subscription().tenantId]",
     "applicationInsightsName": "[parameters('appInsights')]",
-    "containerRegistryName": "[parameters('acr')]"
+    "containerRegistryName": "[parameters('acr')]",
+    "iotHubName": "[parameters('iotHub')]",
+    "dataBaseName": "[parameters('dataBase')]",
+    "containerName": "[parameters('container')]"
   },
   "resources": [
     {
@@ -154,6 +169,93 @@
         "containerRegistry": "[resourceId('Microsoft.ContainerRegistry/registries',variables('containerRegistryName'))]",
         "storageAccount": "[resourceId('Microsoft.Storage/storageAccounts/',variables('storageAccountName'))]"
       }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/blobServices",
+      "apiVersion": "2021-04-01",
+      "name": "[concat(variables('dataBaseName'), '/default')]",
+      "dependsOn": [
+            "[resourceId('Microsoft.Storage/storageAccounts', variables('dataBaseName'))]"
+        ],
+        "sku": {
+            "name": "Standard_LRS",
+            "tier": "Standard"
+        },
+        "properties": {
+            "cors": {
+                "corsRules": []
+            },
+            "deleteRetentionPolicy": {
+                "enabled": false
+            }
+        }
+    },
+    {
+      "type": "Microsoft.Devices/IotHubs",
+      "apiVersion": "2021-03-31",
+      "name": "[variables('iotHubName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "F1",
+        "tier": "Free",
+        "capacity": 1
+      },
+      "identity": {
+        "type": "None"
+      },
+      "properties": {
+        "ipFilterRules": [],
+        "eventHubEndpoints": {
+          "events": {
+            "retentionTimeInDays": 1,
+            "partitionCount": 2
+          }
+        },
+        "routing": {
+          "endpoints": {
+            "serviceBusQueues": [],
+            "serviceBusTopics": [],
+            "eventHubs": [],
+            "storageContainers": []
+          },
+          "routes": [],
+          "fallbackRoute": {
+            "name": "$fallback",
+            "source": "DeviceMessages",
+            "condition": "true",
+            "endpointNames": [
+              "events"
+            ],
+            "isEnabled": true
+          }
+        },
+        "storageEndpoints": {
+          "$default": {
+            "sasTtlAsIso8601": "PT1H",
+            "connectionString": "[Concat('DefaultEndpointsProtocol=https;AccountName=',variables('dataBaseName'),';EndpointSuffix=',environment().suffixes.storage,';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('dataBaseName')), '2021-04-01').keys[0].value)]",              
+            "containerName": "[variables('containerName')]",
+            "authenticationType": "keyBased"
+          }
+        },
+        "messagingEndpoints": {
+          "fileNotifications": {
+            "lockDurationAsIso8601": "PT1M",
+            "ttlAsIso8601": "PT1H",
+            "maxDeliveryCount": 10
+          }
+        },
+        "enableFileUploadNotifications": true,
+        "cloudToDevice": {
+          "maxDeliveryCount": 10,
+          "defaultTtlAsIso8601": "PT1H",
+          "feedback": {
+            "lockDurationAsIso8601": "PT1M",
+            "ttlAsIso8601": "PT1H",
+            "maxDeliveryCount": 10
+          }
+        },
+        "features": "None"
+        }
     }
   ]
 }

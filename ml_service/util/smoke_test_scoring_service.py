@@ -114,7 +114,7 @@ def main():
     parser.add_argument(
         "--type",
         type=str,
-        choices=["AKS", "ACI", "Webapp"],
+        choices=["ACI", "Webapp"],
         required=True,
         help="type of service"
     )

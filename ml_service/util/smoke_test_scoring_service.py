@@ -114,7 +114,7 @@ def main():
     parser.add_argument(
         "--type",
         type=str,
-        choices=["AKS", "ACI", "Webapp"],
+        choices=["ACI", "Webapp"],
         required=True,
         help="type of service"
     )
@@ -128,6 +128,7 @@ def main():
 
     e = Env()
     if args.type == "Webapp":
+        print(args.service)
         output = call_web_app(args.service, {})
     else:
         output = call_web_service(e, args.type, args.service)

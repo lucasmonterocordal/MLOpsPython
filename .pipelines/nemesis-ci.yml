@@ -11,13 +11,10 @@ trigger:
   branches:
     include:
     - master
-    - nemesis-main
   paths:
     include:
     - nemesis/
     - ml_service/pipelines/nemesis_build_train_pipeline.py
-    - ml_service/pipelines/nemesis_build_train_pipeline_with_r.py
-    - ml_service/pipelines/nemesis_build_train_pipeline_with_r_on_dbricks.py
 
 variables:
 - template: nemesis-variables-template.yml

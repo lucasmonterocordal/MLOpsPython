@@ -84,7 +84,7 @@ variables:
   - name: AML_ENV_NAME_SCORE_COPY
     value: nemesis_score_copy_env
   - name: AML_COMPUTE_CLUSTER_CPU_SKU_SCORING
-    value: STANDARD_D14_V2
+    value: STANDARD_DS2_V2
   - name: AML_COMPUTE_CLUSTER_NAME_SCORING
     value: score-cluster
   - name: AML_CLUSTER_MIN_NODES_SCORING

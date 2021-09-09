@@ -12,7 +12,7 @@
     },
     "location": {
       "type": "string",
-      "defaultValue": "eastus",
+      "defaultValue": "westeurope",
       "allowedValues": [
         "eastus",
         "eastus2",
@@ -36,7 +36,7 @@
     },
     "keyvault": {
       "type": "string",
-      "defaultValue": "[concat(parameters('baseName'),'-AML-KV1')]"
+      "defaultValue": "[concat(parameters('baseName'),'-AML-KV2')]"
     },
     "appInsights": {
       "type": "string",

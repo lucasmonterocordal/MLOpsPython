@@ -32,7 +32,7 @@
     },
     "storageAccount": {
       "type": "string",
-      "defaultValue": "[concat(toLower(parameters('baseName')), 'amlsta')]"
+      "defaultValue": "[concat(toLower(parameters('baseName')), 'amlsa')]"
     },
     "keyvault": {
       "type": "string",

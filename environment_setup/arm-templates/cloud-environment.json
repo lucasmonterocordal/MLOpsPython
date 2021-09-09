@@ -48,7 +48,7 @@
     },
     "dataBase": {
       "type": "string",
-      "defaultValue": "[concat(toLower(parameters('baseName')),'database')]"
+      "defaultValue": "[concat(toLower(parameters('baseName')),'data')]"
     },
     "container": {
       "type": "string",

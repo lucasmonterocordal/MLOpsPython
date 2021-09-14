@@ -3,8 +3,8 @@
 resources:
   containers:
   - container: mlops
-    image: mlops/nem:latest
-    endpoint: acrconnection
+    image: mcr.microsoft.com/mlops/python:latest
+
 
 pr: none
 trigger:
